@@ -13,12 +13,12 @@ class PagesController < ApplicationController
 
   def api_spotter
 
-    response = RestClient.get("http://remobsapi.herokuapp.com/api/v1/data_buoys?buoy=2&token=#{ENV["SPOTTER_TOKEN"]}")
+    response = RestClient.get("http://remobsapi.herokuapp.com/api/v1/data_buoys?buoy=3&start_date=2020-12-28&end_date=2020-12-30&token=#{ENV["SPOTTER_TOKEN"]}")
 
     spotter_response = JSON.parse(response)
     latitude = []
-    longitude =[]
-    datetime =[]
+    longitude = []
+    date_time = []
     windspeed = []
     winddirection = []
     significantwaveheight = []
@@ -29,12 +29,11 @@ class PagesController < ApplicationController
     watertemperature = []
     battery = []
     
-	  spotter_response[0].each do |item|
+	  spotter_response.each do |item|
       latitude << item["lat"]
       longitude << item["lon"]
-      x = item["date_time"]
-      datetime = DateTime.parse x
-      datetime << datetime.strftime("%d-%m %H:%M")
+      x = DateTime.parse item["date_time"]
+      date_time << x.strftime("%d-%m %H:%M")
       windspeed << item["wspd"]
       winddirection << item["wdir"]    
       significantwaveheight << item["swvht1"]
@@ -50,7 +49,7 @@ class PagesController < ApplicationController
     params = {}
     params[:latitude] = latitude
     params[:longitude] = longitude
-    params[:datetime] = datetime
+    params[:date_time] = date_time
     params[:windspeed] = windspeed
     params[:winddirection] = winddirection
     params[:significantwaveheight] = significantwaveheight
