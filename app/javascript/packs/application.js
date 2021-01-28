@@ -27,10 +27,13 @@ import { initMapbox } from '../plugins/init_mapbox';
 import "bootstrap";
 
 // Internal imports, e.g:
+import { toogleTab } from '../plugins/init_tabs';
+
 // import { initSelect2 } from '../components/init_select2';
 
 document.addEventListener('turbolinks:load', () => {
 	initMapbox();
+	toogleTab();
   // Call your functions here, e.g:
   // initSelect2();
 });
