@@ -3,10 +3,16 @@ class PagesController < ApplicationController
   def home
     @values = api_spotter
 
-    # @markers = []
-    # @values[:latitude].each_with_index do |marker, idx|
-    #   @markers << { lat: @values[:latitude][idx], lng: @values[:longitude][idx], date_time: @values[:timestamp][idx] }
-    # end
+    @markers = []
+    @values[:latitude].each_with_index do |marker, idx|
+      @markers << { lat: @values[:latitude][idx].to_f, lng: @values[:longitude][idx].to_f, dtm: @values[:date_time][idx] }
+    end
+
+
+    @deploy = {
+      lat: -62.209516,
+      lng: -58.28005
+    }
   end
 
   private
@@ -28,20 +34,24 @@ class PagesController < ApplicationController
     peakdirection =[]     
     watertemperature = []
     battery = []
-    
+    date_time2= []
+
 	  spotter_response.each do |item|
       latitude << item["lat"]
       longitude << item["lon"]
       x = DateTime.parse item["date_time"]
       date_time << x.strftime("%d-%m %H:%M")
-      windspeed << item["wspd"]
+      windspeed << item["wspd"].to_f
       winddirection << item["wdir"]    
-      significantwaveheight << item["swvht1"]
-      peakperiod << item["tp1"]
+      significantwaveheight << item["swvht1"].to_f
+      peakperiod << item["tp1"].to_f
       meanperiod << item["mean_tp"]   
       wavedirection << item["wvdir1"]
       peakdirection << item["pk_dir"]
-      watertemperature << item ["sst"]   
+      if item["sst"]
+        watertemperature << item ["sst"].to_f
+        date_time2 << x.strftime("%d-%m %H:%M")
+      end
       battery << item ["battery"]      
     end
     
@@ -50,6 +60,7 @@ class PagesController < ApplicationController
     params[:latitude] = latitude
     params[:longitude] = longitude
     params[:date_time] = date_time
+    params[:date_time2] = date_time2
     params[:windspeed] = windspeed
     params[:winddirection] = winddirection
     params[:significantwaveheight] = significantwaveheight

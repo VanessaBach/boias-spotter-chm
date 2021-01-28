@@ -3,8 +3,8 @@ const toogleTab = () => {
   const clickButton1 = document.getElementById("antartica");
   const clickButton2 = document.getElementById("abrolhos");
 
-  const antartica = document.getElementById("antartica");
-  const abrolhos = document.getElementById("abrolhos");
+  const antartica = document.getElementById("antartica-content");
+  const abrolhos = document.getElementById("abrolhos-content");
 
   if (clickButton1) {
     clickButton1.addEventListener('click', (event) => {

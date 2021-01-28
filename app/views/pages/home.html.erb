@@ -8,17 +8,233 @@
 	<div class="buoys">
       
     <ul class="tab-group">
-      <li class="tab active"><a href="#antartica">Antartica</a></li>
-      <li class="tab"><a href="#abrolhos">Abrolhos</a></li>
+      <li class="tab active tab-class" id="antartica">Antartica</li>
+      <li class="tab tab-class" id="abrolhos">Abrolhos</li>
     </ul>
     
     <div class="tab-content">
-      <div id="antartica">            
-        
-        
+      <div id="antartica-content">
+        <h2 class="text-center mt-4">ÚLTIMOS DADOS</h2>
+        <div class="row">
+          <div class="col-sm-6 col-md-6 pb-2">
+            <div class="card align-middle p-1 card-value text-center">
+              <p>DATA-HORA: <%= @values[:date_time][-1]%> </p>
+              <p>POSIÇÃO ATUAL:</p>
+              <p>Lat <%= @markers[0][:lat]%></p>
+              <p>Long <%= @markers[0][:lng]%> </p>
+              <p>Deriva da boia: <%= Haversine.distance(@deploy[:lat], @deploy[:lng], @markers[-1][:lat], @markers[-1][:lng]).to_nautical_miles.round(2) %> MN</p>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-6">
+            <div class="card align-middle p-1 card-value text-center">
+              <p>LANÇAMENTO: 05/12/2020 16:00</p>
+              <p>LOCAL DE LANÇAMENTO:</p>
+              <p>Lat <%= @deploy[:lat]%></p>
+              <p>Long <%= @deploy[:lng]%> </p>
+              <% if Haversine.distance(@deploy[:lat], @deploy[:lng], @markers[-1][:lat], @markers[-1][:lng]).to_km > 1 %>
+                <div class="alert-danger">BOIA FORA DE POSIÇÃO</div>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="col-sm-6 col-md-6">
+            <div class="card p-1 align-middle card-value text-center">
+              <p>ALTURA DE ONDA: <%= @values[:significantwaveheight][-1].round(1)%> m</p>
+              <p>PERÍODO DAS ONDAS: <%= @values[:peakperiod][-1].round(1)%> s</p>
+              <p>DIREÇÃO DAS ONDAS: <%= @values[:peakdirection][-1].round()%>°</p>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-6">
+            <div class="card p-1 align-middle card-value text-center">
+              <p>VELOCIDADE DO VENTO: <%= @values[:windspeed][-1].round(1)%> nós</p>
+              <p>DIREÇÃO DO VENTO: <%= @values[:winddirection][-1].round()%>°</p>
+              <p>TEMPERATURA DA ÁGUA: <%= @values[:watertemperature][-1].round(1)%>°</p>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="text-center mt-4">POSIÇÃO</h2>
+        <div id="map"
+             style="width: 100%; height: 600px;"
+             data-markers="<%= @markers.to_json %>"
+             data-circle="<%= @deploy.to_json %>"
+             data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>"></div>
+        <h2 class="text-center mt-4">ALTURA DE ONDAS</h2>
+        <canvas id="myChart0" width="400" height="200"></canvas>
+        <h2 class="text-center  mt-4">PERÍODO DAS ONDAS</h2>
+        <canvas id="myChart1" width="400" height="200"></canvas>
+        <h2 class="text-center  mt-4">DIREÇÃO DAS ONDAS</h2>
+        <canvas id="myChart4" width="400" height="200"></canvas>
+        <h2 class="text-center  mt-4">VELOCIDADE DO VENTO</h2>
+        <canvas id="myChart2" width="400" height="200"></canvas>
+        <h2 class="text-center  mt-4">DIREÇÃO DO VENTO</h2>
+        <canvas id="myChart3" class="pb-5" width="400" height="200"></canvas>
+        <h2 class="text-center  mt-4">TEMPERATURA DA ÁGUA</h2>
+        <canvas id="myChart5" class="pb-5" width="400" height="200"></canvas>
+        <br>
+        <br>
       </div>
+
+
+      <script>
+      var ctx = document.getElementById("myChart0").getContext('2d');
+      var myChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+              labels: <%= @values[:date_time].to_json.html_safe %>,
+              datasets: [{
+                  label: '# of Votes',
+                  data: <%= @values[:significantwaveheight].to_json.html_safe %>,
+              }]
+          },
+          options: {
+              legend: {
+                display: false
+              },
+              scales: {
+                  yAxes: [{
+                      ticks: {
+                          beginAtZero:false
+                      }
+                  }]
+              }
+          }
+      });
+      </script>
+
+
+      <script>
+      var ctx = document.getElementById("myChart1").getContext('2d');
+      var myChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+              labels: <%= @values[:date_time].to_json.html_safe %>,
+              datasets: [{
+                  label: '# of Votes',
+                  data: <%= @values[:peakperiod].to_json.html_safe %>,
+              }]
+          },
+          options: {
+              legend: {
+                display: false
+              },
+              scales: {
+                  yAxes: [{
+                      ticks: {
+                          beginAtZero:false
+                      }
+                  }]
+              }
+          }
+      });
+      </script>
+
+      <script>
+      var ctx = document.getElementById("myChart2").getContext('2d');
+      var myChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+              labels: <%= @values[:date_time].to_json.html_safe %>,
+              datasets: [{
+                  data: <%= @values[:windspeed].to_json.html_safe %>,
+              }]
+          },
+          options: {
+              legend: {
+                display: false
+              },
+              scales: {
+                  yAxes: [{
+                      ticks: {
+                          beginAtZero:false
+                      }
+                  }]
+              }
+          }
+      });
+      </script>
+
+      <script>
+      var ctx = document.getElementById("myChart3").getContext('2d');
+      var myChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+              labels: <%= @values[:date_time].to_json.html_safe %>,
+              datasets: [{
+                  label: '# of Votes',
+                  data: <%= @values[:winddirection].to_json.html_safe %>,
+              }]
+          },
+          options: {
+              legend: {
+                display: false
+              },
+              scales: {
+                  yAxes: [{
+                      ticks: {
+                          beginAtZero:false
+                      }
+                  }]
+              }
+          }
+      });
+      </script>
+
+      <script>
+      var ctx = document.getElementById("myChart4").getContext('2d');
+      var myChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+              labels: <%= @values[:date_time].to_json.html_safe %>,
+              datasets: [{
+                  label: '# of Votes',
+                  data: <%= @values[:peakdirection].to_json.html_safe %>,
+              }]
+          },
+          options: {
+              legend: {
+                display: false
+              },
+              scales: {
+                  yAxes: [{
+                      ticks: {
+                          beginAtZero:false
+                      }
+                  }]
+              }
+          }
+      });
+      </script>
+
+      <script>
+      var ctx = document.getElementById("myChart5").getContext('2d');
+      var myChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+              labels: <%= @values[:date_time2].to_json.html_safe %>,
+              datasets: [{
+                  label: '# of Votes',
+                  data: <%= @values[:watertemperature].to_json.html_safe %>,
+              }]
+          },
+          options: {
+              legend: {
+                display: false
+              },
+              scales: {
+                  yAxes: [{
+                      ticks: {
+                          beginAtZero:false
+                      }
+                  }]
+              }
+          }
+      });
+      </script>
+
+
       
-      <div id="abrolhos">   
+      <div id="abrolhos-content">   
         
       </div>
       
