@@ -60,9 +60,13 @@
              data-circle="<%= @deploy.to_json %>"
              data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>"></div>
         <h2 class="text-center mt-4">ALTURA DE ONDAS</h2>
-        <canvas id="myChart0" width="400" height="200"></canvas>
+        <canvas id="myChart0"
+          data-date_time="<%= @values[:date_time].to_json %>"
+          data-values="<%= @values[:significantwaveheight].to_json %>"></canvas>
         <h2 class="text-center  mt-4">PERÍODO DAS ONDAS</h2>
-        <canvas id="myChart1" width="400" height="200"></canvas>
+        <canvas id="myChart1"
+          data-date_time="<%= @values[:date_time].to_json %>"
+          data-values="<%= @values[:peakperiod].to_json %>"></canvas>
         <h2 class="text-center  mt-4">DIREÇÃO DAS ONDAS</h2>
         <canvas id="myChart4" width="400" height="200"></canvas>
         <h2 class="text-center  mt-4">VELOCIDADE DO VENTO</h2>
@@ -76,7 +80,7 @@
       </div>
 
 
-      <script>
+<!--       <script>
       var ctx = document.getElementById("myChart0").getContext('2d');
       var myChart = new Chart(ctx, {
           type: 'line',
@@ -230,7 +234,7 @@
               }
           }
       });
-      </script>
+      </script> -->
 
 
       

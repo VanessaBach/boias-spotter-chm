@@ -15,7 +15,7 @@ require("channels")
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
-import { initMapbox } from '../plugins/init_mapbox';
+
 
 
 // ----------------------------------------------------
@@ -28,12 +28,16 @@ import "bootstrap";
 
 // Internal imports, e.g:
 import { toogleTab } from '../plugins/init_tabs';
+import { initMapbox } from '../plugins/init_mapbox';
+import { initChart } from '../plugins/init_chart';
+
 
 // import { initSelect2 } from '../components/init_select2';
 
 document.addEventListener('turbolinks:load', () => {
 	initMapbox();
 	toogleTab();
+	initChart();
   // Call your functions here, e.g:
   // initSelect2();
 });
