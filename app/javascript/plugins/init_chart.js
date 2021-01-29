@@ -64,6 +64,118 @@ const initChart = () => {
     });
   }
 
+  if (chart2) { 
+    const dateTime = JSON.parse(chart2.canvas.dataset.date_time);
+    const values = JSON.parse(chart2.canvas.dataset.values);
+
+    var myChart = new Chart(chart2, {
+      type: 'line',
+      data: {
+          labels: dateTime,
+          datasets: [{          
+            label: 'Wind Speed',
+            data: values,
+          }]
+      },
+      options: {
+        legend: {
+          display: false
+        },
+        scales: {
+          yAxes: [{
+              ticks: {
+                beginAtZero:false
+              }
+          }]
+        }
+      }
+    });
+  }
+
+  if (chart3) { 
+    const dateTime = JSON.parse(chart3.canvas.dataset.date_time);
+    const values = JSON.parse(chart3.canvas.dataset.values);
+
+    var myChart = new Chart(chart3, {
+      type: 'line',
+      data: {
+          labels: dateTime,
+          datasets: [{          
+            label: 'Wind Direction',
+            data: values,
+          }]
+      },
+      options: {
+        legend: {
+          display: false
+        },
+        scales: {
+          yAxes: [{
+              ticks: {
+                beginAtZero:false
+              }
+          }]
+        }
+      }
+    });
+  }
+
+  if (chart4) { 
+    const dateTime = JSON.parse(chart4.canvas.dataset.date_time);
+    const values = JSON.parse(chart4.canvas.dataset.values);
+
+    var myChart = new Chart(chart4, {
+      type: 'line',
+      data: {
+          labels: dateTime,
+          datasets: [{          
+            label: 'Peak Direction',
+            data: values,
+          }]
+      },
+      options: {
+        legend: {
+          display: false
+        },
+        scales: {
+          yAxes: [{
+              ticks: {
+                beginAtZero:false
+              }
+          }]
+        }
+      }
+    });
+  }
+
+  if (chart5) { 
+    const dateTime = JSON.parse(chart5.canvas.dataset.date_time);
+    const values = JSON.parse(chart5.canvas.dataset.values);
+
+    var myChart = new Chart(chart5, {
+      type: 'line',
+      data: {
+          labels: dateTime,
+          datasets: [{          
+            label: 'Water Temperature',
+            data: values,
+          }]
+      },
+      options: {
+        legend: {
+          display: false
+        },
+        scales: {
+          yAxes: [{
+              ticks: {
+                beginAtZero:false
+              }
+          }]
+        }
+      }
+    });
+  }      
+
 };
 
 

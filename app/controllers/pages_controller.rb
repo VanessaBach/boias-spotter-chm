@@ -1,7 +1,16 @@
 class PagesController < ApplicationController
 
   def home
-    @values = api_spotter
+
+    if params[:start_date].present? && params[:end_date].present?
+      @end_date = "#{params[:end_date]}"
+      @start_date = "#{params[:start_date]}"
+    else
+      @end_date = Time.now.utc.strftime("%Y-%m-%d %H:%M:%S")
+      @start_date = (Time.now.utc - 10 * 86400).strftime("%Y-%m-%d %H:%M:%S")     
+    end
+
+    @values = api_spotter(@start_date, @end_date) 
 
     @markers = []
     @values[:latitude].each_with_index do |marker, idx|
@@ -17,9 +26,9 @@ class PagesController < ApplicationController
 
   private
 
-  def api_spotter
+  def api_spotter(start_date, end_date)
 
-    response = RestClient.get("http://remobsapi.herokuapp.com/api/v1/data_buoys?buoy=3&start_date=2020-12-28&end_date=2020-12-30&token=#{ENV["SPOTTER_TOKEN"]}")
+    response = RestClient.get("http://remobsapi.herokuapp.com/api/v1/data_buoys?buoy=3&start_date=#{start_date}&end_date=#{end_date}&token=#{ENV["SPOTTER_TOKEN"]}")
 
     spotter_response = JSON.parse(response)
     latitude = []

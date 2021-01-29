@@ -6,6 +6,7 @@ $main: #1ab188;
 $main-light: lighten($main,5%);
 $main-dark: darken($main,5%);
 
+
 $gray-light: #a0b3b0;
 $gray: #ddd;
 
@@ -23,21 +24,13 @@ html {
 }
 
 body {
-  background:$body-bg;
+  background:rgba($form-bg,.9);  
   font-family: 'Titillium Web', sans-serif;
 }
 
-.tab-class {
-  text-decoration:none;
-  color:$main;
-  transition:.5s ease;
-  &:hover {
-    color:$main-dark;
-  }
-}
 
 .buoys {
-  background:rgba($form-bg,.9);
+  background:white;
   padding: 40px;
   margin:40px auto;
   border-radius:$br;
@@ -59,8 +52,8 @@ body {
   display:block;
   text-decoration:none;
   padding:15px;
-  background:rgba($gray-light,.25);
-  color:$gray-light;
+  background:$body-bg;
+  color:white;
   font-size:20px;
   float:left;
   width:50%;

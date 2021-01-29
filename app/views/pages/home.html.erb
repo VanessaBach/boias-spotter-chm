@@ -14,6 +14,17 @@
     
     <div class="tab-content">
       <div id="antartica-content">
+
+        <div class="wrap">
+          <div class="search">
+            <input type="text" class="searchTerm" id="start_date" placeholder="2020-12-28" value="<%= @start_date %>" title="Start Date">
+            <input type="text" class="searchTerm" id="end_date" placeholder="2020-12-30" value="<%= @end_date %>" title="End Date">
+            <button type="submit" class="searchButton">
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
+        </div>
+
         <h2 class="text-center mt-4">ÚLTIMOS DADOS</h2>
         <div class="row">
           <div class="col-sm-6 col-md-6 pb-2">
@@ -59,22 +70,36 @@
              data-markers="<%= @markers.to_json %>"
              data-circle="<%= @deploy.to_json %>"
              data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>"></div>
+
         <h2 class="text-center mt-4">ALTURA DE ONDAS</h2>
         <canvas id="myChart0"
           data-date_time="<%= @values[:date_time].to_json %>"
           data-values="<%= @values[:significantwaveheight].to_json %>"></canvas>
+
         <h2 class="text-center  mt-4">PERÍODO DAS ONDAS</h2>
         <canvas id="myChart1"
           data-date_time="<%= @values[:date_time].to_json %>"
           data-values="<%= @values[:peakperiod].to_json %>"></canvas>
+
         <h2 class="text-center  mt-4">DIREÇÃO DAS ONDAS</h2>
-        <canvas id="myChart4" width="400" height="200"></canvas>
+        <canvas id="myChart2"
+          data-date_time="<%= @values[:date_time].to_json %>"
+          data-values="<%= @values[:peakdirection].to_json %>"></canvas>
+
         <h2 class="text-center  mt-4">VELOCIDADE DO VENTO</h2>
-        <canvas id="myChart2" width="400" height="200"></canvas>
+        <canvas id="myChart3" width="400" height="200"
+          data-date_time="<%= @values[:date_time].to_json %>"
+          data-values="<%= @values[:windspeed].to_json %>"></canvas>
+
         <h2 class="text-center  mt-4">DIREÇÃO DO VENTO</h2>
-        <canvas id="myChart3" class="pb-5" width="400" height="200"></canvas>
+        <canvas id="myChart4" class="pb-5" width="400" height="200"
+          data-date_time="<%= @values[:date_time].to_json %>"
+          data-values="<%= @values[:winddirection].to_json %>"></canvas>
+
         <h2 class="text-center  mt-4">TEMPERATURA DA ÁGUA</h2>
-        <canvas id="myChart5" class="pb-5" width="400" height="200"></canvas>
+        <canvas id="myChart5" class="pb-5" width="400" height="200"
+          data-date_time="<%= @values[:date_time2].to_json %>"
+          data-values="<%= @values[:watertemperature].to_json %>"></canvas>
         <br>
         <br>
       </div>
