@@ -6,8 +6,8 @@ class PagesController < ApplicationController
       @end_date = "#{params[:end_date]}"
       @start_date = "#{params[:start_date]}"
     else
-      @end_date = Time.now.utc.strftime("%Y-%m-%d %H:%M:%S")
-      @start_date = (Time.now.utc - 10 * 86400).strftime("%Y-%m-%d %H:%M:%S")     
+      @end_date = Time.now.utc.strftime("%Y-%m-%d")
+      @start_date = (Time.now.utc - 10 * 86400).strftime("%Y-%m-%d")     
     end
 
     @values = api_spotter(@start_date, @end_date) 
