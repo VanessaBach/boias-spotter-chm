@@ -7,6 +7,7 @@ require("@rails/ujs").start()
 require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
+require('js-datepicker')
 
 
 // Uncomment to copy all static images under ../images to the output folder and reference
@@ -30,6 +31,8 @@ import "bootstrap";
 import { toogleTab } from '../plugins/init_tabs';
 import { initMapbox } from '../plugins/init_mapbox';
 import { initChart } from '../plugins/init_chart';
+import { foldData } from '../plugins/init_fold';
+import { initPicker } from '../plugins/init_datapicker';
 
 
 // import { initSelect2 } from '../components/init_select2';
@@ -38,6 +41,8 @@ document.addEventListener('turbolinks:load', () => {
 	initMapbox();
 	toogleTab();
 	initChart();
+	foldData();
+	initPicker();
   // Call your functions here, e.g:
   // initSelect2();
 });
