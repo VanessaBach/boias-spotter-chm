@@ -1,10 +1,20 @@
 import datepicker from 'js-datepicker'
 
 const initPicker = () => {
-  const picker = datepicker(".date-picker-date")
 
-	const start = datepicker('.search-start', { id: 1 })
-	const end = datepicker('.search-end', { id: 1 })
+	const start = datepicker('.search-start', { id: 1,
+      formatter: (input, date, instance) => {
+      const value = date.toLocaleDateString()
+      input.value = value // => '1/1/2099'
+    }
+  });
+
+	const end = datepicker('.search-end', { id: 1 ,
+      formatter: (input, date, instance) => {
+      const value = date.toLocaleDateString()
+      input.value = value // => '1/1/2099'
+    }
+  });
 
 	start.getRange()
 	end.getRange()
